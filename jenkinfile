@@ -7,20 +7,25 @@ pipeline {
             steps { checkout scm }
         }
         
+
 stage('Build') {
     steps {
         bat 'where java'
         bat 'where javac'
-        bat 'java -version'
         bat 'javac -version'
+
         bat 'javac App.java AppTest.java'
     }
 }
 
-        stage('Test') {
-            steps { bat 'java AppTest' }
-        }
+stage('Test') {
+    steps {
+        bat '"C:\\Program Files\\Java\\jdk-21.0.12.1\\bin\\java.exe" -version'
+
+        bat '"C:\\Program Files\\Java\\jdk-21.0.12.1\\bin\\java.exe" AppTest'
     }
+}
+
 
     post {
         success { echo 'Build stable' }
