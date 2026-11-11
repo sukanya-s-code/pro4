@@ -6,12 +6,17 @@ pipeline {
         stage('Checkout') {
             steps { checkout scm }
         }
-        stage('Build') {
-            steps {
-                bat 'javac -version'
-                bat 'javac App.java AppTest.java'
-            }
-        }
+        
+stage('Build') {
+    steps {
+        bat 'where java'
+        bat 'where javac'
+        bat 'java -version'
+        bat 'javac -version'
+        bat 'javac App.java AppTest.java'
+    }
+}
+
         stage('Test') {
             steps { bat 'java AppTest' }
         }
