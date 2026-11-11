@@ -1,34 +1,45 @@
+
 pipeline {
     agent any
-    triggers { githubPush() }
+
+    triggers {
+        githubPush()
+    }
 
     stages {
+
         stage('Checkout') {
-            steps { checkout scm }
+            steps {
+                checkout scm
+            }
         }
-        
 
-stage('Build') {
-    steps {
-        bat 'where java'
-        bat 'where javac'
-        bat 'javac -version'
+        stage('Build') {
+            steps {
+                bat 'where java'
+                bat 'where javac'
+                bat 'javac -version'
 
-        bat 'javac App.java AppTest.java'
+                bat '"C:\\Program Files\\Java\\jdk-21.0.12.1\\bin\\javac.exe" App.java AppTest.java'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                bat '"C:\\Program Files\\Java\\jdk-21.0.12.1\\bin\\java.exe" -version'
+
+                bat '"C:\\Program Files\\Java\\jdk-21.0.12.1\\bin\\java.exe" AppTest'
+            }
+        }
     }
-}
-
-stage('Test') {
-    steps {
-        bat '"C:\\Program Files\\Java\\jdk-21.0.12.1\\bin\\java.exe" -version'
-
-        bat '"C:\\Program Files\\Java\\jdk-21.0.12.1\\bin\\java.exe" AppTest'
-    }
-}
-
 
     post {
-        success { echo 'Build stable' }
-        failure { echo 'Build failed' }
+        success {
+            echo 'Build stable'
+        }
+
+        failure {
+            echo 'Build failed'
+        }
     }
 }
